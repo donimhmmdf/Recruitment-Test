@@ -1,0 +1,17 @@
+1.
+SELECT title
+FROM books 
+WHERE id NOT IN(SELECT book_id FROM rent_logs);
+
+2.
+SELECT u.username, (DATEDIFF(rl.actual_return_date, rl.return_date) * 1000) AS Denda
+FROM rent_logs rl
+JOIN users u ON u.id = rl.user_id
+WHERE rl.return_date < rl.actual_return_date
+
+3.
+SELECT u.username, GROUP_CONCAT(b.title SEPARATOR ', ') AS Buku
+FROM rent_logs rl
+JOIN users u ON u.id = rl.user_id
+JOIN books b ON b.id = rl.book_id
+GROUP BY u.id, u.username
